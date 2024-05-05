@@ -6,13 +6,39 @@
 //
 
 import SwiftUI
+import Lottie
 
-struct LottieView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct LottieView: UIViewRepresentable {
+	var name: String
+	let loopMode: LottieLoopMode
+	let animationSpeed: CGFloat
+	
+	
+	init(name: String, loopMode: LottieLoopMode = .playOnce, animationSpeed: CGFloat = 1) {
+		self.name = name
+		self.loopMode = loopMode
+		self.animationSpeed = animationSpeed
+	}
+	
+	func makeUIView(context: Context) ->  Lottie.LottieAnimationView {
+		
+		let animationView = Lottie.LottieAnimationView(name:name)
+		
+		animationView.loopMode = loopMode
+		animationView.animationSpeed = animationSpeed
+		animationView.play()
+		return animationView
+		
+		
+
+
+		
+
+	}
+
+	func updateUIView(_ uiView: Lottie.LottieAnimationView, context: Context) {
+		// Update the view if needed
+	}
 }
 
-#Preview {
-    LottieView()
-}
+

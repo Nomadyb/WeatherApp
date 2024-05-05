@@ -8,6 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
 	@ObservedObject var weatherViewModel: WeatherViewModel
+	@StateObject var favoriteLocationViewModel = FavoriteLocationViewModel()
 
 	init(weatherViewModel: WeatherViewModel) {
 		self.weatherViewModel = weatherViewModel
@@ -17,9 +18,15 @@ struct ContentView: View {
 	var body: some View {
 		NavigationView {
 			ZStack {
-				LinearGradient(gradient: Gradient(colors: [Color(UIColor.init(red: 0.2, green: 0.5, blue: 0.1, alpha: 5)), Color(UIColor.blue),Color(UIColor.purple),]),
-							   startPoint: .topLeading,
-							   endPoint: .bottomTrailing)
+				LinearGradient(gradient: Gradient(colors: [
+					Color(red: 0.33, green: 0.29, blue: 0.36), // eggplant
+					Color(red: 0.99, green: 0.75, blue: 0.71), // melon
+					Color(red: 0.42, green: 0.57, blue: 0.61), // air force blue
+					Color(red: 0.93, green: 0.58, blue: 0.57), // light coral
+					Color(red: 0.88, green: 0.52, blue: 0.51), // light coral 2
+					Color(red: 0.74, green: 0.51, blue: 0.52), // old rose
+					Color(red: 0.37, green: 0.53, blue: 0.57)  // air force blue 2
+				]), startPoint: .topLeading, endPoint: .bottomTrailing)
 					.edgesIgnoringSafeArea(.all)
 
 				VStack {
@@ -75,11 +82,12 @@ struct ContentView: View {
 				}
 			}
 			.navigationBarItems(trailing:
-				NavigationLink(destination: FavoriteLocationView()) {
-					Image(systemName: "plus")
-						.foregroundColor(.white)
-						.font(.system(size: 24))
-						.padding()
+
+					NavigationLink(destination: FavoriteLocationView(viewModel: favoriteLocationViewModel)) { // FavoriteLocationViewModel örneğini iletmeyi unutmayın
+						Image(systemName: "plus")
+							.foregroundColor(.white)
+							.font(.system(size: 24))
+							.padding()
 				}
 			)
 		}

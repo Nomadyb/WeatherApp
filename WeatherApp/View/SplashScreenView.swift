@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct SplashScreenView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+	@State private var shouldShowContentView = false
+	
+	var body: some View {
+		VStack {
+			if shouldShowContentView {
+				ContentView(weatherViewModel: WeatherViewModel()) // 3 saniye sonra ContentView ekranını göster
+			} else {
+				LottieView(name: "animation3", loopMode: .playOnce)
+					.frame(width: 200, height: 200)
+					.onAppear {
+
+						DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+							withAnimation {
+								shouldShowContentView = true
+							}
+						}
+					}
+			}
+		}
+	}
 }
 
-#Preview {
-    SplashScreenView()
+struct SplashScreenView_Previews: PreviewProvider {
+	static var previews: some View {
+		SplashScreenView()
+	}
 }

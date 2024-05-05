@@ -5,55 +5,168 @@
 //  Created by Ahmet Emin Yalçınkaya on 5.05.2024.
 //
 
+// FavoriteLocationView.swift
 import SwiftUI
 
+
+
 struct FavoriteLocationView: View {
-	@StateObject var viewModel: FavoriteLocationViewModel
+	@ObservedObject var viewModel: FavoriteLocationViewModel
+	@State private var searchText = ""
 	
 	var body: some View {
-		VStack {
-			Text("Hava Durumu")
-				.font(.title)
-				.padding(.top)
+		ZStack {
+			LinearGradient(gradient: Gradient(colors: [
+				Color(red: 0.33, green: 0.29, blue: 0.36), // eggplant
+				Color(red: 0.99, green: 0.75, blue: 0.71), // melon
+				Color(red: 0.42, green: 0.57, blue: 0.61), // air force blue
+				Color(red: 0.93, green: 0.58, blue: 0.57), // light coral
+				Color(red: 0.88, green: 0.52, blue: 0.51), // light coral 2
+				Color(red: 0.74, green: 0.51, blue: 0.52), // old rose
+				Color(red: 0.37, green: 0.53, blue: 0.57)  // air force blue 2
+			]), startPoint: .topLeading, endPoint: .bottomTrailing)
+				.edgesIgnoringSafeArea(.all)
 			
-			SearchBar() // Arama kutusu
-			
-			Divider()
-				.padding(.top)
-			
-			ScrollView {
-				ForEach(viewModel.locations, id: \.name) { location in
-					LocationCard(location: location)
-						.padding(.horizontal)
-						.padding(.bottom)
+			VStack {
+				Spacer().frame(height: 200) // Arka plan yüksekliği
+				
+				Text("Hava Durumu")
+					.font(.title)
+					.padding(.top)
+				
+				SearchBar(viewModel: viewModel, searchText: $searchText)
+				
+				Divider()
+					.padding(.top)
+				
+				if viewModel.favorites.isEmpty {
+					Text("Henüz favori şehir eklenmemiş")
+						.foregroundColor(.secondary)
+						.padding()
+				} else {
+					ScrollView {
+						LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 16) {
+							ForEach(viewModel.favorites, id: \.name) { location in
+								FavoriteItemView(location: location, action: {
+									viewModel.removeFavorite(location)
+								})
+							}
+						}
+						.padding()
+					}
 				}
 			}
+			.padding(.top, 200)
 		}
+		.ignoresSafeArea(.all, edges: .top)
 	}
 }
 
 
-//arama yapısı
+
+
 struct SearchBar: View {
-	@State private var SearchText = ""
-	
+	@ObservedObject var viewModel: FavoriteLocationViewModel
+	@Binding var searchText: String
+	@State private var showSearchResults = false // Arama sonuçlarını göstermek için durumu tutar
+	@State private var offset: CGFloat = 10.0
 	var body: some View {
-		/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
+		VStack {
+			HStack {
+				TextField("Arama yapın", text: $searchText)
+					.textFieldStyle(RoundedBorderTextFieldStyle())
+					.padding(.horizontal)
+				
+				Button(action: {
+					viewModel.searchLocation(cityName: searchText)
+					showSearchResults = true
+				}) {
+					Image(systemName: "magnifyingglass")
+						.foregroundColor(.gray)
+						.padding()
+				}
+			}
+
+			// Arama sonuçlarını göster
+			if showSearchResults {
+				ZStack(alignment: .topLeading) {
+					RoundedRectangle(cornerRadius: 10)
+						.fill(Color.white)
+						.shadow(radius: 5)
+					
+					VStack(alignment: .leading) {
+						ForEach(viewModel.searchResults, id: \.name) { location in
+							Button(action: {
+								viewModel.addFavorite(location)
+								showSearchResults = false // Sonuçları gizle
+							}) {
+								Text(location.name)
+									.font(.subheadline)
+									.foregroundColor(.primary)
+									.padding(.vertical, 8)
+									.padding(.horizontal, 16)
+									.background(Color.white)
+									.cornerRadius(10)
+									.shadow(radius: 2)
+									.padding(.bottom, 4)
+							}
+						}
+					}
+					.padding()
+				}
+				.frame(height: 15)
+				.transition(.opacity)
+				.animation(Animation.easeInOut(duration: 1.0), value: offset)//animasyon güncellemeyi unutma
+				.padding(.horizontal)
+				.padding(.top, 4)
+			}
+		}
+		.padding(.horizontal)
 	}
 }
 
 
 
-// bir location card eklemeliyim
-struct LocationCard: View {
+
+struct FavoriteItemView: View {
 	var location: Location
-	
-	
-	var body: some View {
-		/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Hello, world!@*/Text("Hello, world!")/*@END_MENU_TOKEN@*/
-	}
-}
+	var action: () -> Void
 
-#Preview {
-	FavoriteLocationView()
+	var body: some View {
+		VStack(alignment: .leading, spacing: 8) {
+			Text(location.name)
+				.font(.title3)
+				.foregroundColor(.primary)
+				.lineLimit(1) // Sadece bir satırda görüntüle
+			
+			Text(location.temperature)
+				.foregroundColor(.secondary)
+				.font(.subheadline)
+			
+			Text(location.weatherCondition) // Hava durumu bilgisi
+				.foregroundColor(.secondary)
+				.font(.subheadline)
+			
+			Text(location.humidity ?? "") // Nem oranı bilgisi
+				.foregroundColor(.secondary)
+				.font(.subheadline)
+
+			Spacer()
+
+			Button(action: action) {
+				Image(systemName: "xmark.circle.fill")
+					.foregroundColor(.red)
+					.padding(20)
+					.background(Color.clear)
+			}
+			.contentShape(Rectangle())
+		}
+		.padding(15)
+		.frame(width: 180, height: 180)
+		.background(
+			RoundedRectangle(cornerRadius: 10)
+				.fill(Color.white)
+				.shadow(radius: 3)
+		)
+	}
 }

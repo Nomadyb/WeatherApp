@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+
+struct Location {
+	let name: String
+	var temperature: String
+	var humidity: String?
+	var weatherCondition: String
+}
