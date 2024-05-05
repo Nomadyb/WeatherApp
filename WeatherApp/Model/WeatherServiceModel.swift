@@ -10,7 +10,7 @@ import Foundation
 
 final class WeatherService: NSObject, CLLocationManagerDelegate {
 	private let locationManager = CLLocationManager()
-	private let API_KEY = "a0f209e39225cace39d2b90ddfc6a658" // Replace with your own API key
+	private let API_KEY = "a0f209e39225cace39d2b90ddfc6a658"
 	private var completionHandler: ((WeatherModel?, Error?) -> Void)?
 	private var dataTask: URLSessionDataTask?
 
@@ -30,7 +30,7 @@ final class WeatherService: NSObject, CLLocationManagerDelegate {
 		guard let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(API_KEY)&units=metric".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
 		guard let url = URL(string: urlString) else { return }
 
-		// Cancel previous task
+
 		dataTask?.cancel()
 
 		dataTask = URLSession.shared.dataTask(with: url) { data, response, error in

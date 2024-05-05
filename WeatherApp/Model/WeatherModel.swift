@@ -9,13 +9,13 @@ import Foundation
 struct WeatherModel {
 	let city: String
 	let description: String
-	var iconURL: URL? // Yeni eklenen özellik
+	var iconURL: URL?
 	let currentTemperature: String
 
 	init(response: APIResponse) {
 		self.city = response.name
 		self.description = response.weather.first?.description ?? "No description"
-		self.iconURL = nil // Başlangıçta nil olarak başlatılıyor
+		self.iconURL = nil //başlangıçta nil olarak atanıyor sonra getIconURL fonksiyonu çağrılarak değeri atanacak
 		self.currentTemperature = "\(response.main.temp)º"
 
 		// iconURL değeri, getIconURL fonksiyonu çağrılmadan önce atanıyor
