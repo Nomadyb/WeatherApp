@@ -15,6 +15,7 @@
 		0C0466EE2BE6BB910051B456 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0466ED2BE6BB910051B456 /* WeatherModel.swift */; };
 		0C0466F22BE6BBDC0051B456 /* WeatherServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0466F12BE6BBDC0051B456 /* WeatherServiceModel.swift */; };
 		0C0466FE2BE7B5130051B456 /* FavoriteLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0466FD2BE7B5130051B456 /* FavoriteLocationView.swift */; };
+		0C0467002BE7CA4A0051B456 /* FavoriteLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0466FF2BE7CA4A0051B456 /* FavoriteLocationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		0C0466F12BE6BBDC0051B456 /* WeatherServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceModel.swift; sourceTree = "<group>"; };
 		0C0466F52BE6C5090051B456 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C0466FD2BE7B5130051B456 /* FavoriteLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationView.swift; sourceTree = "<group>"; };
+		0C0466FF2BE7CA4A0051B456 /* FavoriteLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLocationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				0C0466EB2BE6BA9A0051B456 /* WeatherViewModel.swift */,
+				0C0466FF2BE7CA4A0051B456 /* FavoriteLocationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C0466F22BE6BBDC0051B456 /* WeatherServiceModel.swift in Sources */,
+				0C0467002BE7CA4A0051B456 /* FavoriteLocationViewModel.swift in Sources */,
 				0C0466BA2BE6ACF00051B456 /* ContentView.swift in Sources */,
 				0C0466EC2BE6BA9A0051B456 /* WeatherViewModel.swift in Sources */,
 				0C0466EE2BE6BB910051B456 /* WeatherModel.swift in Sources */,
