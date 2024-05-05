@@ -17,7 +17,7 @@ struct ContentView: View {
 						.foregroundColor(.white)
 						.font(.system(size: 70))
 				}
-				
+
 				if let description = weatherViewModel.weatherModel?.description {
 					Text(description)
 						.font(.headline)
@@ -33,7 +33,7 @@ struct ContentView: View {
 							ProgressView()
 						}
 					}
-					
+
 					if let currentTemperature = weatherViewModel.weatherModel?.currentTemperature {
 						Text(currentTemperature)
 							.font(.system(size: 70))
@@ -41,29 +41,29 @@ struct ContentView: View {
 					}
 				}
 				.padding(.top, -20)
-				
+
 				HStack(spacing: 14) {
 					if let maxTemperature = weatherViewModel.weatherModel?.maxTemperature {
 						Label(maxTemperature, systemImage: "thermometer.sun.fill")
 					}
-					
+
 					if let minTemperature = weatherViewModel.weatherModel?.minTemperature {
 						Label(minTemperature, systemImage: "thermometer.snowflake")
 					}
 				}
 				.symbolRenderingMode(.multicolor)
 				.foregroundColor(.white)
-				
+
 				Divider()
 					.foregroundColor(.white)
 					.padding()
-				
+
 				if let humidity = weatherViewModel.weatherModel?.humidity {
 					Label(humidity, systemImage: "humidity.fill")
 						.symbolRenderingMode(.multicolor)
 						.foregroundColor(.white)
 				}
-				
+
 				Spacer()
 			}
 			.padding(.top, 32)

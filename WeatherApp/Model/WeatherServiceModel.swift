@@ -9,13 +9,13 @@
 import CoreLocation
 import Foundation
 
-public final class WeatherService: NSObject {
+final class WeatherService: NSObject, CLLocationManagerDelegate {
 	private let locationManager = CLLocationManager()
 	private let API_KEY = "a0f209e39225cace39d2b90ddfc6a658" // Replace with your own API key
 	private var completionHandler: ((WeatherModel?, Error?) -> Void)?
 	private var dataTask: URLSessionDataTask?
 
-	public override init() {
+	override init() {
 		super.init()
 		locationManager.delegate = self
 	}
@@ -27,9 +27,8 @@ public final class WeatherService: NSObject {
 		loadDataOrRequestLocationAuth()
 	}
 
-	
 	private func makeDataRequest(forCoordinates coordinates: CLLocationCoordinate2D) {
-		guard let urlString = "https://api.openweathermap.org/data/3.0/weather?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(API_KEY)&units=metric".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+		guard let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(API_KEY)&units=metric".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
 		guard let url = URL(string: urlString) else { return }
 
 		// Cancel previous task
@@ -59,24 +58,22 @@ public final class WeatherService: NSObject {
 			locationManager.requestWhenInUseAuthorization()
 		}
 	}
-}
 
-extension WeatherService: CLLocationManagerDelegate {
-	public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		guard let location = locations.first else { return }
 		makeDataRequest(forCoordinates: location.coordinate)
 	}
 
-	public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 		loadDataOrRequestLocationAuth()
 	}
 
-	public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		print("Something went wrong: \(error.localizedDescription)")
 	}
 }
 
-public struct LocationAuthError: Error {}
+struct LocationAuthError: Error {}
 
 struct APIResponse: Decodable {
 	let name: String
