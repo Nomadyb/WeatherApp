@@ -7,11 +7,21 @@
 import SwiftUI
 
 struct ContentView: View {
-	@ObservedObject var weatherViewModel = WeatherViewModel()
+	@ObservedObject var weatherViewModel: WeatherViewModel
+
+	init(weatherViewModel: WeatherViewModel) {
+		self.weatherViewModel = weatherViewModel
+		self.weatherViewModel.loadWeatherData() // WeatherViewModel başlatılırken loadWeatherData çağrılıyor
+	}
 
 	var body: some View {
 		ZStack {
+			LinearGradient(colors: [.blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
+				.edgesIgnoringSafeArea(.all)
+
 			VStack {
+				Spacer()
+
 				if let city = weatherViewModel.weatherModel?.city {
 					Text(city)
 						.foregroundColor(.white)
@@ -29,8 +39,15 @@ struct ContentView: View {
 					if let url = weatherViewModel.weatherModel?.iconURL {
 						AsyncImage(url: url) { image in
 							image
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+								.frame(width: 50, height: 50)
 						} placeholder: {
-							ProgressView()
+							Image(systemName: "cloud.sun.fill")
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+								.frame(width: 50, height: 50)
+								.foregroundColor(.white)
 						}
 					}
 
@@ -40,41 +57,10 @@ struct ContentView: View {
 							.foregroundColor(.white)
 					}
 				}
-				.padding(.top, -20)
-
-				HStack(spacing: 14) {
-					if let maxTemperature = weatherViewModel.weatherModel?.maxTemperature {
-						Label(maxTemperature, systemImage: "thermometer.sun.fill")
-					}
-
-					if let minTemperature = weatherViewModel.weatherModel?.minTemperature {
-						Label(minTemperature, systemImage: "thermometer.snowflake")
-					}
-				}
-				.symbolRenderingMode(.multicolor)
-				.foregroundColor(.white)
-
-				Divider()
-					.foregroundColor(.white)
-					.padding()
-
-				if let humidity = weatherViewModel.weatherModel?.humidity {
-					Label(humidity, systemImage: "humidity.fill")
-						.symbolRenderingMode(.multicolor)
-						.foregroundColor(.white)
-				}
+				.padding(.top, 20)
 
 				Spacer()
 			}
-			.padding(.top, 32)
 		}
-		.background(LinearGradient(colors: [.blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
-		.edgesIgnoringSafeArea(.all)
-	}
-}
-
-struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
 	}
 }

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct WeatherAppApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
+	var body: some Scene {
+		WindowGroup {
+			// WeatherViewModel'i oluşturun
+			let weatherViewModel = WeatherViewModel()
+			// Oluşturduğunuz WeatherViewModel'i ContentView'e geçirin
+			ContentView(weatherViewModel: weatherViewModel)
+		}
+	}
 }

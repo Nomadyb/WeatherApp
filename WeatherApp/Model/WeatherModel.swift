@@ -4,25 +4,34 @@
 //
 //  Created by Ahmet Emin Yalçınkaya on 4.05.2024.
 //
-
 import Foundation
 
 struct WeatherModel {
 	let city: String
 	let description: String
-	let iconURL: URL? // Yeni eklenen özellik
+	var iconURL: URL? // Yeni eklenen özellik
 	let currentTemperature: String
-	let minTemperature: String
-	let maxTemperature: String
-	let humidity: String
 
 	init(response: APIResponse) {
 		self.city = response.name
 		self.description = response.weather.first?.description ?? "No description"
-		self.iconURL = URL(string: "http://openweathermap.org/img/wn/\(response.weather.first?.iconName ?? "")@2x.png") // iconURL oluşturuldu
+		self.iconURL = nil // Başlangıçta nil olarak başlatılıyor
 		self.currentTemperature = "\(response.main.temp)º"
-		self.minTemperature = "\(response.main.tempMin)º Min."
-		self.maxTemperature = "\(response.main.tempMax)º Max."
-		self.humidity = "\(response.main.humidity)%"
+
+		// iconURL değeri, getIconURL fonksiyonu çağrılmadan önce atanıyor
+		if let iconName = response.weather.first?.iconName {
+			self.iconURL = getIconURL(iconCode: iconName)
+		}
+	}
+
+	private func getIconURL(iconCode: String) -> URL? {
+		let iconName: String
+		if iconCode.hasSuffix("d") {
+			iconName = String(iconCode.dropLast(1))
+		} else {
+			iconName = String(iconCode.dropLast(1) + "n")
+		}
+		let urlString = "https://openweathermap.org/img/wn/\(iconName)@2x.png"
+		return URL(string: urlString)
 	}
 }

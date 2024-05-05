@@ -5,7 +5,6 @@
 //  Created by Ahmet Emin Yalçınkaya on 4.05.2024.
 //
 
-
 import CoreLocation
 import Foundation
 
@@ -83,15 +82,9 @@ struct APIResponse: Decodable {
 
 struct APIMain: Decodable {
 	let temp: Double
-	let tempMin: Double
-	let tempMax: Double
-	let humidity: Int
 
 	enum CodingKeys: String, CodingKey {
 		case temp
-		case tempMin = "temp_min"
-		case tempMax = "temp_max"
-		case humidity
 	}
 }
 
@@ -101,6 +94,6 @@ struct APIWeather: Decodable {
 
 	enum CodingKeys: String, CodingKey {
 		case description
-		case iconName = "main"
+		case iconName = "icon"
 	}
 }
