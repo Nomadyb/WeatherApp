@@ -5,16 +5,19 @@
 //  Created by Ahmet Emin Yalçınkaya on 4.05.2024.
 //
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
 	@ObservedObject var weatherViewModel: WeatherViewModel
 	@StateObject var favoriteLocationViewModel = FavoriteLocationViewModel()
+	@State private var showMap = false
 
+	
 	init(weatherViewModel: WeatherViewModel) {
 		self.weatherViewModel = weatherViewModel
 		self.weatherViewModel.loadWeatherData()
 	}
-
+	
 	var body: some View {
 		NavigationView {
 			ZStack {
@@ -27,24 +30,24 @@ struct ContentView: View {
 					Color(red: 0.74, green: 0.51, blue: 0.52), // old rose
 					Color(red: 0.37, green: 0.53, blue: 0.57)  // air force blue 2
 				]), startPoint: .topLeading, endPoint: .bottomTrailing)
-					.edgesIgnoringSafeArea(.all)
-
+				.edgesIgnoringSafeArea(.all)
+				
 				VStack {
 					Spacer()
-
+					
 					if let city = weatherViewModel.weatherModel?.city {
 						Text(city)
 							.foregroundColor(.white)
 							.font(.system(size: 70))
 					}
-
+					
 					if let description = weatherViewModel.weatherModel?.description {
 						Text(description)
 							.font(.headline)
 							.foregroundColor(.white)
 							.padding(.bottom, 8)
 					}
-
+					
 					HStack {
 						if let url = weatherViewModel.weatherModel?.iconURL {
 							AsyncImage(url: url) { image in
@@ -60,7 +63,7 @@ struct ContentView: View {
 									.foregroundColor(.white)
 							}
 						}
-
+						
 						if let currentTemperature = weatherViewModel.weatherModel?.currentTemperature {
 							Text(currentTemperature)
 								.font(.system(size: 70))
@@ -68,28 +71,34 @@ struct ContentView: View {
 						}
 					}
 					.padding(.top, 20)
-
+					
 					Spacer()
-
+					
 					Button(action: {
+						showMap = true
 						// Harita entegrasyonu açılacak
+						//burası update edilerek her bir favori lokasyon pinlenmelidir.Ayrıca silinen favorilerin pini kalıdırılmalıdır.
 					}) {
 						Text("Haritada Göster")
 							.foregroundColor(.white)
 							.font(.system(size: 20))
 							.padding()
 					}
+					.sheet(isPresented: $showMap) {
+						MapKitView(viewModel: favoriteLocationViewModel)
+					}
 				}
+				.navigationBarItems(trailing:
+										
+										NavigationLink(destination: FavoriteLocationView(viewModel: favoriteLocationViewModel)) {
+					
+					Image(systemName: "plus")
+						.foregroundColor(.white)
+						.font(.system(size: 24))
+						.padding()
+				}
+				)
 			}
-			.navigationBarItems(trailing:
-
-					NavigationLink(destination: FavoriteLocationView(viewModel: favoriteLocationViewModel)) { // FavoriteLocationViewModel örneğini iletmeyi unutmayın
-						Image(systemName: "plus")
-							.foregroundColor(.white)
-							.font(.system(size: 24))
-							.padding()
-				}
-			)
 		}
 	}
 }

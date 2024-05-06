@@ -22,6 +22,7 @@
 		0C04670B2BE827A90051B456 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0C04670A2BE827A90051B456 /* Lottie */; };
 		0C04670D2BE829430051B456 /* animation3.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C04670C2BE829430051B456 /* animation3.json */; };
 		0C0467102BE82A9B0051B456 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C04670F2BE82A9B0051B456 /* LottieView.swift */; };
+		0C0467122BE8C8780051B456 /* MapKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0467112BE8C8780051B456 /* MapKitView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		0C0467072BE826880051B456 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		0C04670C2BE829430051B456 /* animation3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = animation3.json; sourceTree = "<group>"; };
 		0C04670F2BE82A9B0051B456 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		0C0467112BE8C8780051B456 /* MapKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				0C0466FD2BE7B5130051B456 /* FavoriteLocationView.swift */,
 				0C0467072BE826880051B456 /* SplashScreenView.swift */,
 				0C04670F2BE82A9B0051B456 /* LottieView.swift */,
+				0C0467112BE8C8780051B456 /* MapKitView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C0467122BE8C8780051B456 /* MapKitView.swift in Sources */,
 				0C0467022BE7CD630051B456 /* LocationModel.swift in Sources */,
 				0C0466F22BE6BBDC0051B456 /* WeatherServiceModel.swift in Sources */,
 				0C0467002BE7CA4A0051B456 /* FavoriteLocationViewModel.swift in Sources */,

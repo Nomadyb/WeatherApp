@@ -46,7 +46,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
 		}
 		dataTask?.resume()
 	}
-	// Diğer fonksiyonlar ve delegate metodları buraya eklenebilir...
+	
 }
 
 // LocationService hataları

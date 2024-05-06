@@ -28,16 +28,16 @@ struct FavoriteLocationView: View {
 				.edgesIgnoringSafeArea(.all)
 			
 			VStack {
-				Spacer().frame(height: 200) // Arka plan yüksekliği
-				
 				Text("Hava Durumu")
 					.font(.title)
-					.padding(.top)
+					.padding(.top, 50) // Başlık yüksekliği
 				
 				SearchBar(viewModel: viewModel, searchText: $searchText)
 				
+				Spacer() // Favori şehirlerin üstündeki boşluğu ayarlamayı unutma
+				
 				Divider()
-					.padding(.top)
+					.padding(.bottom)
 				
 				if viewModel.favorites.isEmpty {
 					Text("Henüz favori şehir eklenmemiş")
@@ -56,12 +56,10 @@ struct FavoriteLocationView: View {
 					}
 				}
 			}
-			.padding(.top, 200)
 		}
 		.ignoresSafeArea(.all, edges: .top)
 	}
 }
-
 
 
 

@@ -13,12 +13,12 @@ struct SplashScreenView: View {
 	var body: some View {
 		VStack {
 			if shouldShowContentView {
-				ContentView(weatherViewModel: WeatherViewModel()) // 3 saniye sonra ContentView ekranını göster
+				ContentView(weatherViewModel: WeatherViewModel())
 			} else {
 				LottieView(name: "animation3", loopMode: .playOnce)
 					.frame(width: 200, height: 200)
 					.onAppear {
-
+						//kuyruğa ekleyerek 3 saniye bekletme
 						DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 							withAnimation {
 								shouldShowContentView = true
